@@ -17,6 +17,19 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static com.manin.userservice.controller.UserController.USER_URL;
+import static com.manin.userservice.model.ContactDetails.ADDRESS_VALIDATION_MSG;
+import static com.manin.userservice.model.ContactDetails.CITY_VALIDATION_MSG;
+import static com.manin.userservice.model.ContactDetails.EMAIL_ID_VALIDATION_MSG;
+import static com.manin.userservice.model.ContactDetails.PHONE_NUMBER_VALIDATION_MSG;
+import static com.manin.userservice.model.ContactDetails.PIN_CODE_VALIDATION_MSG;
+import static com.manin.userservice.model.ContactDetails.STATE_VALIDATION_MSG;
+import static com.manin.userservice.model.ContactDetails.TOWN_VALIDATION_MSG;
+import static com.manin.userservice.model.TaxDetails.GST_NUMBER_VALIDATION_MSG;
+import static com.manin.userservice.model.TaxDetails.PAN_NUMBER_VALIDATION_MSG;
+import static com.manin.userservice.model.User.BUSINESS_NAME_VALIDATION_MSG;
+import static com.manin.userservice.model.User.CONTACT_DETAILS_VALIDATION_MSG;
+import static com.manin.userservice.model.User.OWNER_NAME_VALIDATION_MSG;
+import static com.manin.userservice.model.User.TAX_DETAILS_VALIDATION_MSG;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -27,16 +40,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
 
+    ObjectMapper mapper = new ObjectMapper();
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private UserService userService;
 
-    ObjectMapper mapper = new ObjectMapper();
-
     @Test
-    public void testGetAllUser() throws Exception{
+    public void testGetAllUser() throws Exception {
         // when
         when(userService.getAllUsers()).thenReturn(Collections.emptyList());
         // then
@@ -46,7 +57,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testUserById() throws Exception{
+    public void testUserById() throws Exception {
         // when
         when(userService.getUserById(anyString())).thenReturn(Optional.empty());
         // then
@@ -80,7 +91,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("Business name not provided")));
+                        Matchers.is(BUSINESS_NAME_VALIDATION_MSG)));
     }
 
     @Test
@@ -94,7 +105,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("Owner name not provided")));
+                        Matchers.is(OWNER_NAME_VALIDATION_MSG)));
     }
 
     @Test
@@ -108,7 +119,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("Contact Details not provided")));
+                        Matchers.is(CONTACT_DETAILS_VALIDATION_MSG)));
     }
 
     @Test
@@ -122,7 +133,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("Tax Details not provided")));
+                        Matchers.is(TAX_DETAILS_VALIDATION_MSG)));
     }
 
     @Test
@@ -136,7 +147,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("Address not provided")));
+                        Matchers.is(ADDRESS_VALIDATION_MSG)));
     }
 
     @Test
@@ -150,7 +161,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("Town not provided")));
+                        Matchers.is(TOWN_VALIDATION_MSG)));
     }
 
     @Test
@@ -164,7 +175,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("City not provided")));
+                        Matchers.is(CITY_VALIDATION_MSG)));
     }
 
     @Test
@@ -178,10 +189,9 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("State not provided")));
+                        Matchers.is(STATE_VALIDATION_MSG)));
     }
 
-    //TODO: add size test for PinCode
     @Test
     public void testPostUserWithBlankPinCodeInContactDetails() throws Exception {
         // given
@@ -193,7 +203,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("Pin code can only have 6 characters")));
+                        Matchers.is(PIN_CODE_VALIDATION_MSG)));
     }
 
     @Test
@@ -207,7 +217,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("Pin code can only have 6 characters")));
+                        Matchers.is(PIN_CODE_VALIDATION_MSG)));
     }
 
     @Test
@@ -221,7 +231,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("Pin code can only have 6 characters")));
+                        Matchers.is(PIN_CODE_VALIDATION_MSG)));
     }
 
     @Test
@@ -235,10 +245,9 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("EmailId not provided")));
+                        Matchers.is(EMAIL_ID_VALIDATION_MSG)));
     }
 
-    // TODO: test phone size
     @Test
     public void testPostUserWithBlankPhoneNumber() throws Exception {
         // given
@@ -250,7 +259,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("Phone number can only have 10  characters")));
+                        Matchers.is(PHONE_NUMBER_VALIDATION_MSG)));
     }
 
     @Test
@@ -264,7 +273,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("Phone number can only have 10  characters")));
+                        Matchers.is(PHONE_NUMBER_VALIDATION_MSG)));
     }
 
     @Test
@@ -278,7 +287,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("Phone number can only have 10  characters")));
+                        Matchers.is(PHONE_NUMBER_VALIDATION_MSG)));
     }
 
     @Test
@@ -292,7 +301,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("GST number can only have 15 characters")));
+                        Matchers.is(GST_NUMBER_VALIDATION_MSG)));
     }
 
     @Test
@@ -306,10 +315,9 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("PAN number can only have 10 characters")));
+                        Matchers.is(PAN_NUMBER_VALIDATION_MSG)));
     }
 
-    //TODO: test size for GST and PAN numbers
     @Test
     public void testPostUserWithGstNumberLengthLowerThanReq() throws Exception {
         // given
@@ -321,7 +329,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("GST number can only have 15 characters")));
+                        Matchers.is(GST_NUMBER_VALIDATION_MSG)));
     }
 
     @Test
@@ -335,7 +343,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("GST number can only have 15 characters")));
+                        Matchers.is(GST_NUMBER_VALIDATION_MSG)));
     }
 
     @Test
@@ -349,7 +357,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("PAN number can only have 10 characters")));
+                        Matchers.is(PAN_NUMBER_VALIDATION_MSG)));
     }
 
     @Test
@@ -363,7 +371,7 @@ public class UserControllerTest {
                 .contentType(APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message",
-                        Matchers.is("PAN number can only have 10 characters")));
+                        Matchers.is(PAN_NUMBER_VALIDATION_MSG)));
     }
 
 
