@@ -1,28 +1,31 @@
 package com.manin.userservice.model;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class ContactDetails {
-    private String addressLaneOne;
-    private String addressLaneTwo;
+    @NotBlank(message = "Address not provided")
+    private String addressLane;
+    @Size(min = 6, max = 6, message = "Pin code can only have 6 characters")
     private String pinCode;
+    @NotBlank(message = "Town not provided")
+    private String town;
+    @NotBlank(message = "City not provided")
     private String city;
+    @NotBlank(message = "State not provided")
     private String state;
+    @Size(min = 10, max = 10, message = "Phone number can only have 10  characters")
     private String phoneNumber;
+    @NotBlank(message = "EmailId not provided")
+    //TODO: add email regex validation here.
     private String emailId;
 
-    public String getAddressLaneOne() {
-        return addressLaneOne;
+    public String getAddressLane() {
+        return addressLane;
     }
 
-    public void setAddressLaneOne(String addressLaneOne) {
-        this.addressLaneOne = addressLaneOne;
-    }
-
-    public String getAddressLaneTwo() {
-        return addressLaneTwo;
-    }
-
-    public void setAddressLaneTwo(String addressLaneTwo) {
-        this.addressLaneTwo = addressLaneTwo;
+    public void setAddressLane(String addressLane) {
+        this.addressLane = addressLane;
     }
 
     public String getPinCode() {
@@ -31,6 +34,14 @@ public class ContactDetails {
 
     public void setPinCode(String pinCode) {
         this.pinCode = pinCode;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
     }
 
     public String getCity() {

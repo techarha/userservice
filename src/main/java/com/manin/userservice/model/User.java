@@ -2,12 +2,28 @@ package com.manin.userservice.model;
 
 import org.springframework.data.annotation.Id;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+
 public class User {
+    public static final String BUSINESS_NAME_VALIDATION_MSG = "Business name not provided";
+    public static final String OWNER_NAME_VALIDATION_MSG = "Owner name not provided";
+    public static final String CONTACT_DETAILS_VALIDATION_MSG = "Contact Details not provided";
+    public static final String TAX_DETAILS_VALIDATION_MSG = "Tax Details not provided";
+
     @Id
     private String id;
+    @NotBlank(message = BUSINESS_NAME_VALIDATION_MSG)
     private String businessName;
+    @NotBlank(message = OWNER_NAME_VALIDATION_MSG)
     private String ownerName;
+    @NotNull(message = CONTACT_DETAILS_VALIDATION_MSG)
+    @Valid
     private ContactDetails businessContactDetails;
+    @NotNull(message = TAX_DETAILS_VALIDATION_MSG)
+    @Valid
     private TaxDetails taxDetails;
 
 
